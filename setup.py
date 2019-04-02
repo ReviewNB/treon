@@ -34,6 +34,7 @@ setup(
     install_requires=[
         'nbconvert',
         'jupyter_client',
-        'jupyter'
+        'jupyter',
+        'docopt'
     ]
     )
