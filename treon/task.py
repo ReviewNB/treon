@@ -9,7 +9,7 @@ class Task:
         self.is_successful = False
 
     def run_tests(self):
-        print("Testing {file_path} \n".format(file_path=self.file_path))
+        print("Triggered test for {file_path} \n".format(file_path=self.file_path))
 
         try:
             is_successful, console_output = execute_notebook(self.file_path)

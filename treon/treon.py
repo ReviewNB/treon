@@ -37,7 +37,7 @@ def main():
     notebooks = get_notebooks_to_test(arguments)
     tasks = [Task(notebook) for notebook in notebooks]
     print_test_collection(notebooks)
-    trigger_tasks(notebooks)
+    trigger_tasks(tasks)
     print_test_result(tasks)
 
 
@@ -60,8 +60,8 @@ def print_test_result(tasks):
        TEST RESULT
        -----------------------------------------------------------------------\n
     """
-    message += '       -- PASSED \n'.join(succeeded)
-    message += '       -- FAILED \n'.join(failed)
+    message += '       -- PASSED \n'.join(succeeded) + '\n'
+    message += '       -- FAILED \n'.join(failed) + '\n'
     message += '-----------------------------------------------------------------------\n'
     message += '{succeeded_count} succeeded, {failed_count} failed, out of {total} notebooks tested.'.format(**variables)
     print(message)
@@ -73,7 +73,7 @@ def print_test_collection(notebooks):
        Collected following Notebooks for testing
        -----------------------------------------------------------------------\n
     """
-    message += '\n'.join(notebooks)
+    message += '\n'.join(notebooks) + '\n'
     message += '-----------------------------------------------------------------------\n'
     print(message)
 
