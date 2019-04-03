@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-
-
-"""setup.py: setuptools control."""
-
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 import re
-from setuptools import setup
-
 
 version = re.search(
     '^__version__\s*=\s*"(.*)"',
@@ -30,7 +27,9 @@ setup(
     long_description = long_descr,
     author = "Amit Rathi",
     author_email = "amit@reviewnb.com",
-    url = "https://reviewnb.com",
+    url = "https://github.com/reviewNB/treon",
+    license='MIT',
+    keywords=['test', 'jupyter', 'notebook', 'jupyter test', 'notebook test', 'unittest', 'doctest'],
     install_requires=[
         'nbconvert',
         'jupyter_client',
