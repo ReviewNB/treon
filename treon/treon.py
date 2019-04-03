@@ -1,14 +1,15 @@
 """
 Usage:
   treon
-  treon PATH
+  treon [PATH] [--threads=<number>]
 
 Arguments:
-  PATH          File or directory path to find notebooks to test. Searches recursively for directory paths. Default: current working directory.
+  PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
+  --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
+  -h --help           Show this screen.
+  --version           Show version.
 
 """
 
@@ -18,35 +19,40 @@ __version__ = "0.1.0"
 import sys
 import os
 import glob
+import textwrap
 from docopt import docopt, DocoptExit
-from multiprocessing import Pool as ProcessPool
+from multiprocessing.dummy import Pool as ThreadPool
 
 from .task import Task
 
-PROCESS_COUNT = 10
+DEFAULT_THREAD_COUNT = 10
 
 
 def main():
     try:
         arguments = docopt(__doc__, version=__version__)
-        print(arguments)
     except DocoptExit:
         sys.exit(__doc__)
 
     print('Executing treon version %s' % __version__)
+    thread_count = arguments['--threads'] or DEFAULT_THREAD_COUNT
     notebooks = get_notebooks_to_test(arguments)
     tasks = [Task(notebook) for notebook in notebooks]
     print_test_collection(notebooks)
-    trigger_tasks(tasks)
-    print_test_result(tasks)
+    trigger_tasks(tasks, thread_count)
+    has_failed = print_test_result(tasks)
+
+    if has_failed:
+        sys.exit(-1)
 
 
-def trigger_tasks(tasks):
-    pool = ProcessPool(PROCESS_COUNT)
+def trigger_tasks(tasks, thread_count):
+    pool = ThreadPool(int(thread_count))
     pool.map(Task.run_tests, tasks)
 
 
 def print_test_result(tasks):
+    has_failed = False
     succeeded = [t.file_path for t in tasks if t.is_successful]
     failed = [t.file_path for t in tasks if not t.is_successful]
     variables = {
@@ -55,24 +61,30 @@ def print_test_result(tasks):
         'total': len(tasks)
     }
 
-    message = """
-       -----------------------------------------------------------------------
-       TEST RESULT
-       -----------------------------------------------------------------------\n
-    """
-    message += '       -- PASSED \n'.join(succeeded) + '\n'
-    message += '       -- FAILED \n'.join(failed) + '\n'
+    message = textwrap.dedent("""
+              -----------------------------------------------------------------------
+              TEST RESULT
+              -----------------------------------------------------------------------\n""")
+
+    if succeeded:
+        message += '       -- PASSED \n'.join(succeeded) + '       -- PASSED \n'
+
+    if failed:
+        has_failed = True
+        message += '       -- FAILED \n'.join(failed) + '       -- FAILED \n'
+
     message += '-----------------------------------------------------------------------\n'
-    message += '{succeeded_count} succeeded, {failed_count} failed, out of {total} notebooks tested.'.format(**variables)
+    message += '{succeeded_count} succeeded, {failed_count} failed, out of {total} notebooks tested.\n'.format(**variables)
+    message += '-----------------------------------------------------------------------\n'
     print(message)
+    return has_failed
 
 
 def print_test_collection(notebooks):
-    message = """
-       -----------------------------------------------------------------------
-       Collected following Notebooks for testing
-       -----------------------------------------------------------------------\n
-    """
+    message = textwrap.dedent("""
+              -----------------------------------------------------------------------
+              Collected following Notebooks for testing
+              -----------------------------------------------------------------------\n""")
     message += '\n'.join(notebooks) + '\n'
     message += '-----------------------------------------------------------------------\n'
     print(message)

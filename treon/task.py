@@ -1,4 +1,5 @@
 import traceback
+import textwrap
 
 from .test_execution import execute_notebook
 
@@ -12,10 +13,10 @@ class Task:
         print("Triggered test for {file_path} \n".format(file_path=self.file_path))
 
         try:
-            is_successful, console_output = execute_notebook(self.file_path)
-            result = self.result_string() + console_output + '\n'
+            self.is_successful, console_output = execute_notebook(self.file_path)
+            result = self.result_string() + console_output
             print(result)
-        except Exception as ex:
+        except Exception:
             print(self.error_string(traceback.format_exc()))
 
     def result_string(self):
@@ -29,10 +30,9 @@ class Task:
             'file_path': self.file_path,
             'stack_trace': stack_trace
         }
-        error_string = """
-            ERROR in testing {file_path}
+        error_string = textwrap.dedent("""ERROR in testing {file_path}
             {stack_trace}
             \n
-        """.format(**variables)
+        """.format(**variables))
 
         return error_string
