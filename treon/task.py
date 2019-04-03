@@ -10,7 +10,7 @@ class Task:
         self.is_successful = False
 
     def run_tests(self):
-        print("Triggered test for {file_path} \n".format(file_path=self.file_path))
+        print("Triggered test for {file_path}".format(file_path=self.file_path))
 
         try:
             self.is_successful, console_output = execute_notebook(self.file_path)
@@ -21,9 +21,9 @@ class Task:
 
     def result_string(self):
         if self.is_successful:
-            return '{file_path}       -- PASSED \n'.format(file_path=self.file_path)
+            return '\n{file_path}     -- PASSED \n'.format(file_path=self.file_path)
         else:
-            return '{file_path}       -- FAILED \n'.format(file_path=self.file_path)
+            return '\n{file_path}     -- FAILED \n'.format(file_path=self.file_path)
 
     def error_string(self, stack_trace):
         variables = {
