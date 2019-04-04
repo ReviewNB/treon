@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/treon.svg)](https://badge.fury.io/py/treon)
+[![PyPI version](https://badge.fury.io/py/numcompress.svg)](https://badge.fury.io/py/treon)
 
 # treon
 Easy to use test framework for Jupyter Notebooks.
@@ -12,6 +12,8 @@ Easy to use test framework for Jupyter Notebooks.
 * Executes every Notebook in a fresh kernel to avoid kernel state interference
 * Primarily a command line tool that can be used easily in your Continuous Integration (CI) system
 * Soon to be part of [ReviewNB](https://www.reviewnb.com/)'s CI system that automatically runs treon everytime you push notebook changes to GitHub
+
+Notebooks are graduating from scratchpad to a part of production workflow. For motivation, checkout [Netflix's blog](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6) to see their production Notebook usage.
 
 ## Installation
 ```
@@ -71,12 +73,6 @@ Options:
   --version           Show version.
 
 ```
-
-## Why even test Notebooks?
-* For any serious Notebook usage, one must have confidence that the Notebook will run on any machine as intended. Testing & Continuous Integration are the tools to gain that confidence.
-* Notebook execution is tied to kernel state. `treon` nullifies the effect of kernel state by programmatically executing every Notebook in a fresh kernel.
-
-Notebooks are graduating from scratchpad to a part of production workflow. For motivation, checkout [Netflix's blog](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6) to see their production Notebook usage.
 
 ## unitttest example
 You just need to add tests as shown below & `treon` would execute them and report the result on the console. See [this](https://docs.python.org/2/library/unittest.html) for more details on how to write unittest.
