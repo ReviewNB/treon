@@ -6,11 +6,11 @@ Easy to use test framework for Jupyter Notebooks.
 * Runs [unittest](https://docs.python.org/2/library/unittest.html) present in your notebook code cells 
 * Runs [doctest](https://docs.python.org/2/library/doctest.html) present in your notebook code cells
 
-### Why should I use it?
+### Why should you use it?
 * Start testing notebooks without writing a single line of code
 * Multithreaded execution for quickly testing a set of notebooks
 * Executes every Notebook in a fresh kernel to avoid kernel state interference
-* Primarily a command line tool that can be used easily in your Continuous Integration (CI) system
+* Primarily a command line tool that can be used easily in any Continuous Integration (CI) system
 * Soon to be part of [ReviewNB](https://www.reviewnb.com/)'s CI system that automatically runs treon everytime you push notebook changes to GitHub
 
 
@@ -84,7 +84,7 @@ You just need to add tests as shown below & treon would execute them and report 
 ![](images/doctest.png)
 
 ## Note about dependencies
-* You need to run treon from environment (virtualenv/pipenv) that has all the dependcies required for Notebooks under test
+* You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependcies required for Notebooks under test
 * treon only works with python3+ environments and uses python3 kernel for executing notebooks
 
 ## Motivation
