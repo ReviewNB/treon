@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/numcompress.svg)](https://badge.fury.io/py/treon)
+[![PyPI version](https://badge.fury.io/py/treon.svg)](https://badge.fury.io/py/treon)
 
 # treon
 Easy to use test framework for Jupyter Notebooks.
