@@ -85,7 +85,7 @@ You just need to add tests as shown below & `treon` would execute them and repor
 
 ## Note about dependencies
 * You need to run `treon` from environment (virtualenv/pipenv) that has all the dependcies required for Notebooks under test
-* We use python3 kernel by default
+* treon only works with python3+ environments and uses python3 kernel for executing notebooks
 
 ## Motivation
 Our aim at [ReviewNB](https://www.reviewnb.com/) is to make notebooks a first class entity in the production workflow. We've built a code review system for Notebooks. The next step is to [build a CI pipeline](https://github.com/ReviewNB/support/issues/19) & `treon` is the core tool in that effort. `treon` is licensed librerally (MIT) & I foresee it being used as an independent tool as well. You can use it locally and/or integrate with CI system of your choice.
