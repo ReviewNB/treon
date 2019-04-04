@@ -19,6 +19,7 @@ with open("README.md", "rb") as f:
 setup(
     name = "treon",
     packages = ["treon"],
+    python_requires='>=3',
     entry_points = {
         "console_scripts": ['treon = treon.treon:main']
     },
