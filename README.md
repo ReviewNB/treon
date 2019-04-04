@@ -13,7 +13,6 @@ Easy to use test framework for Jupyter Notebooks.
 * Primarily a command line tool that can be used easily in your Continuous Integration (CI) system
 * Soon to be part of [ReviewNB](https://www.reviewnb.com/)'s CI system that automatically runs treon everytime you push notebook changes to GitHub
 
-Notebooks are graduating from scratchpad to a part of production workflow. For motivation, checkout [Netflix's blog](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6) to see their production Notebook usage.
 
 ## Installation
 ```
@@ -87,6 +86,11 @@ You just need to add tests as shown below & `treon` would execute them and repor
 ## Note about dependencies
 * You need to run `treon` from environment (virtualenv/pipenv) that has all the dependcies required for Notebooks under test
 * We use python3 kernel by default
+
+## Motivation
+Our aim at [ReviewNB](https://www.reviewnb.com/) is to make notebooks a first class entity in the production workflow. We've built a code review system for Notebooks. The next step is to [build a CI pipeline](https://github.com/ReviewNB/support/issues/19) & `treon` is the core tool in that effort. `treon` is licensed librerally (MIT) & I foresee it being used as an independent tool as well. You can use it locally and/or integrate with CI system of your choice.
+
+For motivation, checkout [Netflix's blog](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6) to see how notebooks are graduating from scratchpad to a part of production workflow.
 
 ## Contribute
 If you see any problem, open an issue or send a pull request. You can write to team@reviewnb.com for any questions.
