@@ -26,6 +26,7 @@ setup(
     version = version,
     description = "Testing framework for Jupyter Notebooks",
     long_description = long_descr,
+    long_description_content_type="text/markdown",
     author = "Amit Rathi",
     author_email = "amit@reviewnb.com",
     url = "https://github.com/reviewNB/treon",
