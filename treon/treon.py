@@ -1,13 +1,14 @@
 """
 Usage:
   treon
-  treon [PATH] [--threads=<number>]
+  treon [PATH] [--threads=<number>] [-v]
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
 
 Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
+  -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
 
@@ -19,6 +20,7 @@ __version__ = "0.1.0"
 import sys
 import os
 import glob
+import logging
 import textwrap
 from docopt import docopt, DocoptExit
 from multiprocessing.dummy import Pool as ThreadPool
@@ -27,6 +29,8 @@ from .task import Task
 
 DEFAULT_THREAD_COUNT = 10
 
+LOG = logging.getLogger('treon')
+
 
 def main():
     try:
@@ -34,7 +38,8 @@ def main():
     except DocoptExit:
         sys.exit(__doc__)
 
-    print('Executing treon version %s' % __version__)
+    setup_logging(arguments)
+    LOG.info('Executing treon version %s',  __version__)
     thread_count = arguments['--threads'] or DEFAULT_THREAD_COUNT
     notebooks = get_notebooks_to_test(arguments)
     tasks = [Task(notebook) for notebook in notebooks]
@@ -44,6 +49,16 @@ def main():
 
     if has_failed:
         sys.exit(-1)
+
+
+def setup_logging(arguments):
+    logging.basicConfig(format='%(message)s')
+    LOG.setLevel(loglevel(arguments))
+
+
+def loglevel(arguments):
+    verbose = arguments['--verbose']
+    return logging.DEBUG if verbose else logging.INFO
 
 
 def trigger_tasks(tasks, thread_count):
@@ -76,7 +91,7 @@ def print_test_result(tasks):
     message += '-----------------------------------------------------------------------\n'
     message += '{succeeded_count} succeeded, {failed_count} failed, out of {total} notebooks tested.\n'.format(**variables)
     message += '-----------------------------------------------------------------------\n'
-    print(message)
+    LOG.info(message)
     return has_failed
 
 
@@ -87,7 +102,7 @@ def print_test_collection(notebooks):
               -----------------------------------------------------------------------\n""")
     message += '\n'.join(notebooks) + '\n'
     message += '-----------------------------------------------------------------------\n'
-    print(message)
+    LOG.debug(message)
 
 
 def get_notebooks_to_test(args):
@@ -95,13 +110,13 @@ def get_notebooks_to_test(args):
     result = []
 
     if os.path.isdir(path):
-        print('Recursively scanning {path} for Notebooks...'.format(path=path))
+        LOG.info('Recursively scanning %s for notebooks...', path)
         path = os.path.join(path, '')  # adds trailing slash (/) if it's missing
         glob_path = path + '**/*.ipynb'
         result = glob.glob(glob_path, recursive=True)
     elif os.path.isfile(path):
         if path.lower().endswith('.ipynb'):
-            print('Testing notebook {path}'.format(path=path))
+            LOG.debug('Testing notebook %s', path)
             result = [path]
         else:
             sys.exit('{path} is not a Notebook'.format(path=path))

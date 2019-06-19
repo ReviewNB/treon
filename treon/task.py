@@ -1,7 +1,14 @@
+import logging
 import traceback
 import textwrap
 
 from .test_execution import execute_notebook
+
+LOG = logging.getLogger('treon.task')
+
+
+def _is_verbose():
+    return LOG.isEnabledFor(logging.DEBUG)
 
 
 class Task:
@@ -10,14 +17,18 @@ class Task:
         self.is_successful = False
 
     def run_tests(self):
-        print("Triggered test for {file_path}".format(file_path=self.file_path))
+        LOG.info("Triggered test for %s", self.file_path)
 
         try:
             self.is_successful, console_output = execute_notebook(self.file_path)
-            result = self.result_string() + console_output
-            print(result)
+            result = self.result_string()
+
+            if not self.is_successful or _is_verbose():
+                result += console_output
+
+            LOG.info(result)
         except Exception:
-            print(self.error_string(traceback.format_exc()))
+            LOG.error(self.error_string(traceback.format_exc()))
 
     def result_string(self):
         if self.is_successful:
