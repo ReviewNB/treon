@@ -3,7 +3,7 @@
 # treon
 Easy to use test framework for Jupyter Notebooks.
 * Runs notebook top to bottom and flags execution errors if any
-* Runs [unittest](https://docs.python.org/2/library/unittest.html) present in your notebook code cells 
+* Runs [unittest](https://docs.python.org/2/library/unittest.html) present in your notebook code cells
 * Runs [doctest](https://docs.python.org/2/library/doctest.html) present in your notebook code cells
 
 ### Why should you use it?
@@ -35,11 +35,11 @@ Collected following Notebooks for testing
 Triggered test for /workspace/treon/tmp/docs/site/ru/guide/keras.ipynb
 Triggered test for /workspace/treon/tmp/docs/site/ru/guide/eager.ipynb
 
-test_sum (__main__.TestNotebook) ... 
+test_sum (__main__.TestNotebook) ...
 ok
-test_sum (__main__.TestNotebook2) ... 
+test_sum (__main__.TestNotebook2) ...
 ok
-test_sum (__main__.TestNotebook3) ... 
+test_sum (__main__.TestNotebook3) ...
 ok
 
 ----------------------------------------------------------------------
@@ -50,8 +50,8 @@ OK
 -----------------------------------------------------------------------
 TEST RESULT
 -----------------------------------------------------------------------
-/workspace/treon/tmp/docs/site/ru/guide/keras.ipynb       -- PASSED 
-/workspace/treon/tmp/docs/site/ru/guide/eager.ipynb       -- PASSED 
+/workspace/treon/tmp/docs/site/ru/guide/keras.ipynb       -- PASSED
+/workspace/treon/tmp/docs/site/ru/guide/eager.ipynb       -- PASSED
 -----------------------------------------------------------------------
 2 succeeded, 0 failed, out of 2 notebooks tested.
 -----------------------------------------------------------------------
@@ -61,13 +61,14 @@ TEST RESULT
 ```
 Usage:
   treon
-  treon [PATH] [--threads=<number>]
+  treon [PATH] [--threads=<number>] [-v]
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
 
 Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
+  -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
 
