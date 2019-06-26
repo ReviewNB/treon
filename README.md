@@ -88,6 +88,25 @@ You just need to add tests as shown below & treon would execute them and report 
 * You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependcies required for Notebooks under test
 * treon only works with python3+ environments and uses python3 kernel for executing notebooks
 
+## Development
+For development, you may use below to create a Python interpreter that resides in `venv` in the current working directory, and to install all of treon's dependencies:
+
+```
+$ virtualenv venv 
+$ source venv/bin/activate
+$ pip install -e .
+$ treon --help # should work
+```
+
+Because the script installs the package as editable, you can make changes in the source tree and use the `treon` command to immediately validate them. If this does not appear to work, check that you are using a the proper virtual environment, and that the package is indeed installed in editable mode:
+
+```
+$ which treon # should point into your virtualenv
+/path/to/my/venv/bin/treon
+$ pip list --local | grep treon # should point to the source tree
+treon                0.1.2                /workspace/treon
+```
+
 ## Motivation
 Our aim at [ReviewNB](https://www.reviewnb.com/) is to make notebooks a first class entity in the production workflow. We've built a code review system for Notebooks. The next step is to [build a CI pipeline](https://github.com/ReviewNB/support/issues/19) & treon is the core tool in that effort. It is licensed librerally (MIT) & I foresee it being used as an independent tool as well. You can use it locally and/or integrate with CI system of your choice.
 
