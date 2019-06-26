@@ -27,14 +27,14 @@ class Task:
                 result += console_output
 
             LOG.info(result)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             LOG.error(self.error_string(traceback.format_exc()))
 
     def result_string(self):
         if self.is_successful:
             return '\n{file_path}     -- PASSED \n'.format(file_path=self.file_path)
-        else:
-            return '\n{file_path}     -- FAILED \n'.format(file_path=self.file_path)
+
+        return '\n{file_path}     -- FAILED \n'.format(file_path=self.file_path)
 
     def error_string(self, stack_trace):
         variables = {

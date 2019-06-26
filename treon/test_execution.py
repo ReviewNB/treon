@@ -1,14 +1,15 @@
-import nbformat
 import textwrap
-from nbconvert.preprocessors import ExecutePreprocessor
+import nbformat
+
 from nbformat.v4 import new_code_cell
+from nbconvert.preprocessors import ExecutePreprocessor
 
 
 def execute_notebook(path):
     notebook = nbformat.read(path, as_version=4)
     notebook.cells.extend([unittest_cell(), doctest_cell()])
-    ep = ExecutePreprocessor(timeout=-1, kernel_name='python3')
-    ep.preprocess(notebook, {'metadata': {'path': '.'}})
+    processor = ExecutePreprocessor(timeout=-1, kernel_name='python3')
+    processor.preprocess(notebook, {'metadata': {'path': '.'}})
     return parse_test_result(notebook.cells)
 
 
@@ -34,7 +35,7 @@ def parse_unittest_output(outputs):
     has_passed, text = False, ''
 
     for output in outputs:
-        text += output.text +  '\n'
+        text += output.text + '\n'
 
     if 'OK' in text[-25:]:
         has_passed = True
@@ -46,7 +47,7 @@ def parse_doctest_output(outputs):
     has_passed, text = False, ''
 
     for output in outputs:
-        text += output.text +  '\n'
+        text += output.text + '\n'
 
     if 'Test passed.' in text[-25:]:
         has_passed = True
