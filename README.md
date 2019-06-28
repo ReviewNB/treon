@@ -1,6 +1,8 @@
-[![PyPI version](https://badge.fury.io/py/treon.svg)](https://badge.fury.io/py/treon)
-
 # treon
+
+[![PyPI version](https://badge.fury.io/py/treon.svg)](https://badge.fury.io/py/treon)
+[![Build Status](https://travis-ci.org/ReviewNB/treon.svg?branch=master)](https://travis-ci.org/ReviewNB/treon)
+
 Easy to use test framework for Jupyter Notebooks.
 * Runs notebook top to bottom and flags execution errors if any
 * Runs [unittest](https://docs.python.org/2/library/unittest.html) present in your notebook code cells
