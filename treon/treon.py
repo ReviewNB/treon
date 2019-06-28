@@ -1,3 +1,4 @@
+# pylint: disable=line-too-long
 """
 Usage:
   treon
@@ -22,8 +23,8 @@ import os
 import glob
 import logging
 import textwrap
-from docopt import docopt, DocoptExit
 from multiprocessing.dummy import Pool as ThreadPool
+from docopt import docopt, DocoptExit
 
 from .task import Task
 
@@ -39,7 +40,7 @@ def main():
         sys.exit(__doc__)
 
     setup_logging(arguments)
-    LOG.info('Executing treon version %s',  __version__)
+    LOG.info('Executing treon version %s', __version__)
     thread_count = arguments['--threads'] or DEFAULT_THREAD_COUNT
     notebooks = get_notebooks_to_test(arguments)
     tasks = [Task(notebook) for notebook in notebooks]
