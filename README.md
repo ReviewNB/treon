@@ -9,9 +9,9 @@ Easy to use test framework for Jupyter Notebooks.
 * Runs [doctest](https://docs.python.org/2/library/doctest.html) present in your notebook code cells
 
 ### Why should you use it?
-* Start testing notebooks without writing a single line of code
+* Start testing notebooks without writing a single line of test code
 * Multithreaded execution for quickly testing a set of notebooks
-* Executes every Notebook in a fresh kernel to avoid kernel state interference
+* Executes every Notebook in a fresh kernel to avoid hidden state problems
 * Primarily a command line tool that can be used easily in any Continuous Integration (CI) system
 * Soon to be part of [ReviewNB](https://www.reviewnb.com/)'s CI system that automatically runs treon everytime you push notebook changes to GitHub
 
