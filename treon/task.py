@@ -1,6 +1,8 @@
 import logging
-import traceback
 import textwrap
+
+from nbconvert.preprocessors import CellExecutionError
+from nbconvert.utils.exceptions import ConversionException
 
 from .test_execution import execute_notebook
 
@@ -27,8 +29,10 @@ class Task:
                 result += console_output
 
             LOG.info(result)
-        except Exception:  # pylint: disable=broad-except
-            LOG.error(self.error_string(traceback.format_exc()))
+        except CellExecutionError as cell_error:
+            LOG.error(self.error_string(cell_error.traceback))
+        except ConversionException:
+            LOG.exception("Execution of notebook '%s' failed", self.file_path)
 
     def result_string(self):
         if self.is_successful:
@@ -41,9 +45,11 @@ class Task:
             'file_path': self.file_path,
             'stack_trace': stack_trace
         }
-        error_string = textwrap.dedent("""ERROR in testing {file_path}
+        error_string = textwrap.dedent("""\
+            ERROR in testing {file_path}
+            
             {stack_trace}
             \n
-        """.format(**variables))
+        """).format(**variables)
 
         return error_string
