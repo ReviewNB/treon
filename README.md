@@ -110,8 +110,13 @@ $ pip list --local | grep treon # should point to the source tree
 treon                0.1.2                /workspace/treon
 ```
 
-Please refer to the `Makefile` for supplementary development tasks, such as linting treon's source code.
-For instance, to run the linter before committing, invoke `make lint`. 
+Please refer to the `Makefile` for supplementary development tasks.
+In particular, the following targets may be relevant when validating changes before committing:
+
+```
+$ make lint # check treon's source for code style errors
+$ make test # run all tests
+```
 
 ## Motivation
 Our aim at [ReviewNB](https://www.reviewnb.com/) is to make notebooks a first class entity in the production workflow. We've built a code review system for Notebooks. The next step is to [build a CI pipeline](https://github.com/ReviewNB/support/issues/19) & treon is the core tool in that effort. It is licensed librerally (MIT) & I foresee it being used as an independent tool as well. You can use it locally and/or integrate with CI system of your choice.

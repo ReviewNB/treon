@@ -1,3 +1,6 @@
 
 lint:
-	pylint treon
+	pylint treon tests
+
+test:
+	pytest tests
