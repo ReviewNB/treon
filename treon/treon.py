@@ -112,8 +112,7 @@ def get_notebooks_to_test(args):
 
     if os.path.isdir(path):
         LOG.info('Recursively scanning %s for notebooks...', path)
-        path = os.path.join(path, '')  # adds trailing slash (/) if it's missing
-        glob_path = path + '**/*.ipynb'
+        path = os.path.join(path, '**/*.ipynb')
         result = glob.glob(glob_path, recursive=True)
     elif os.path.isfile(path):
         if path.lower().endswith('.ipynb'):
