@@ -128,13 +128,19 @@ def build_ignore_list(search_directory):
     """
     Recursively searches a given directory for `.treonignore` files and
     compiles a list of :class:`pathlib.Path` objects that should be ignored.
+    Note that this function does not return the rules specified in any
+    `.treonignore` files but instead paths to the notebooks that should
+    be ignored once the parsed rules are applied.
 
     :param pathlib.Path search_directory: directory to search
     """
     globs = []
+    # For each .treonignore file in search_directory or its children...
     for ignorefile in search_directory.glob('**/.treonignore'):
         LOG.debug("Found ignore file %s", ignorefile.as_posix())
+        # Iterate over all of the rules in the .treonignore file...
         with ignorefile.open() as rules:
             for rule in rules:
+                # And find any notebooks that match those rules.
                 globs.extend(ignorefile.parent.glob(rule))
     return globs
