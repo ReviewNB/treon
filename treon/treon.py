@@ -20,9 +20,9 @@ __version__ = "0.1.2"
 
 import sys
 import os
-import glob
 import logging
 import textwrap
+import pathlib
 from multiprocessing.dummy import Pool as ThreadPool
 from docopt import docopt, DocoptExit
 
@@ -107,23 +107,16 @@ def print_test_collection(notebooks):
 
 
 def get_notebooks_to_test(args):
-    path = args['PATH'] or os.getcwd()
-    result = []
+    path = pathlib.Path(args['PATH'] or os.getcwd())
 
-    if os.path.isdir(path):
-        LOG.info('Recursively scanning %s for notebooks...', path)
-        path = os.path.join(path, '**/*.ipynb')
-        result = glob.glob(glob_path, recursive=True)
-    elif os.path.isfile(path):
-        if path.lower().endswith('.ipynb'):
-            LOG.debug('Testing notebook %s', path)
-            result = [path]
-        else:
-            sys.exit('{path} is not a Notebook'.format(path=path))
+    if path.is_file():
+        if path.suffix == '.ipynb':
+            return [path.as_posix()]
+        sys.exit(f"{path} is not a notebook")
+    elif path.is_dir():
+        LOG.info("Recursively scanning %s for notebooks...", path)
+        return [i.as_posix() for i in path.glob('**/*.ipynb')]
     else:
-        sys.exit('{path} is not a valid path'.format(path=path))
+        sys.exit(f"{path} is not a valid path")
 
-    if not result:
-        sys.exit('No notebooks to test in {path}'.format(path=path))
-
-    return result
+    sys.exit(f"No notebooks to test in {path}")
