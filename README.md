@@ -86,6 +86,18 @@ You just need to add tests as shown below & treon would execute them and report 
 
 ![](images/doctest.png)
 
+## Ignoring notebooks
+
+You can ignore notebooks by creating a `.treonignore` file. To skip notebooks
+during testing, you can specify the relative path to a notebook, a directory,
+or a glob (kind of like a `.gitignore` file).
+
+You can have multiple `.treonignore` files. The rules in each `.treonignore`
+file will apply recursively to each child subdirectory.
+
+`.treonignore` rules will not be considered if you specify a path to a notebook
+(and not a directory).
+
 ## Note about dependencies
 * You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependcies required for Notebooks under test
 * treon only works with python3+ environments and uses python3 kernel for executing notebooks

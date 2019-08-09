@@ -115,8 +115,26 @@ def get_notebooks_to_test(args):
         sys.exit(f"{path} is not a notebook")
     elif path.is_dir():
         LOG.info("Recursively scanning %s for notebooks...", path)
-        return [i.as_posix() for i in path.glob('**/*.ipynb')]
+        ignored = build_ignore_list(path)
+        notebooks = filter(lambda nb: nb not in ignored, path.glob('**/*.ipynb'))
+        return (nb.as_posix() for nb in notebooks)
     else:
         sys.exit(f"{path} is not a valid path")
 
     sys.exit(f"No notebooks to test in {path}")
+
+
+def build_ignore_list(search_directory):
+    """
+    Recursively searches a given directory for `.treonignore` files and
+    compiles a list of :class:`pathlib.Path` objects that should be ignored.
+
+    :param pathlib.Path search_directory: directory to search
+    """
+    globs = []
+    for ignorefile in search_directory.glob('**/.treonignore'):
+        LOG.debug("Found ignore file %s", ignorefile.as_posix())
+        with ignorefile.open() as rules:
+            for rule in rules:
+                globs.extend(ignorefile.parent.glob(rule))
+    return globs
