@@ -1,3 +1,4 @@
+import os
 import textwrap
 import nbformat
 
@@ -9,8 +10,14 @@ def execute_notebook(path):
     notebook = nbformat.read(path, as_version=4)
     notebook.cells.extend([unittest_cell(), doctest_cell()])
     processor = ExecutePreprocessor(timeout=-1, kernel_name='python3')
-    processor.preprocess(notebook, {'metadata': {'path': '.'}})
+    processor.preprocess(notebook, metadata(path))
     return parse_test_result(notebook.cells)
+
+
+def metadata(path):
+    return {'metadata': {
+        'path': os.path.dirname(path)
+    }}
 
 
 def parse_test_result(cells):
