@@ -117,11 +117,12 @@ def get_notebooks_to_test(args):
         LOG.info("Recursively scanning %s for notebooks...", path)
         ignored = build_ignore_list(path)
         notebooks = filter(lambda nb: nb not in ignored, path.glob('**/*.ipynb'))
+        notebooks = list((nb.as_posix() for nb in notebooks))
+        if len(notebooks) == 0:
+            sys.exit("No notebooks to test in {path}".format(path=path))
         return (nb.as_posix() for nb in notebooks)
     else:
         sys.exit("{path} is not a valid path".format(path=path))
-
-    sys.exit("No notebooks to test in {path}".format(path=path))
 
 
 def build_ignore_list(search_directory):
