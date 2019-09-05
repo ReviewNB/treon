@@ -30,6 +30,13 @@ def test_path_ignore():
         assert TEST_NOTEBOOK_PATH.joinpath('basic.ipynb').samefile(ignored[0])
 
 
+def test_path_ignore_absolute():
+    with _temporary_treonignore('/basic.ipynb'):
+        ignored = build_ignore_list(TEST_NOTEBOOK_PATH)
+        assert len(ignored) == 1
+        assert TEST_NOTEBOOK_PATH.joinpath('basic.ipynb').samefile(ignored[0])
+
+
 def test_glob_ignore():
     with _temporary_treonignore('*'):
         ignored = build_ignore_list(TEST_NOTEBOOK_PATH)

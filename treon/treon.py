@@ -18,13 +18,14 @@ Options:
 __version__ = "0.1.2"
 
 
-import sys
-import os
-import logging
-import textwrap
-import pathlib
-from multiprocessing.dummy import Pool as ThreadPool
 from docopt import docopt, DocoptExit
+import glob
+import logging
+from multiprocessing.dummy import Pool as ThreadPool
+import pathlib
+import os
+import sys
+import textwrap
 
 from .task import Task
 
@@ -120,7 +121,7 @@ def get_notebooks_to_test(args):
         notebooks = list((nb.as_posix() for nb in notebooks))
         if not notebooks:
             sys.exit("No notebooks to test in {path}".format(path=path))
-        return (nb.as_posix() for nb in notebooks)
+        return notebooks
     else:
         sys.exit("{path} is not a valid path".format(path=path))
 
@@ -142,6 +143,7 @@ def build_ignore_list(search_directory):
         # Iterate over all of the rules in the .treonignore file...
         with ignorefile.open() as rules:
             for rule in rules:
+                rule = rule.strip().lstrip('/')
                 # And find any notebooks that match those rules.
                 globs.extend(ignorefile.parent.glob(rule))
     return globs
