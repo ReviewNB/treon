@@ -14,30 +14,33 @@ def _temporary_treonignore(*rules):
     try:
         ignorefile.touch(exist_ok=False)
         ignorefile.write_text('\n'.join(rules))
-        yield
+        yield list(build_ignore_list(TEST_NOTEBOOK_PATH))
     finally:
         ignorefile.unlink()
 
 
 def test_no_ignore():
-    with _temporary_treonignore():
-        assert build_ignore_list(TEST_NOTEBOOK_PATH) == []
+    with _temporary_treonignore() as ignored:
+        assert ignored == []
+
 
 def test_path_ignore():
-    with _temporary_treonignore('basic.ipynb'):
-        ignored = build_ignore_list(TEST_NOTEBOOK_PATH)
+    with _temporary_treonignore('basic.ipynb') as ignored:
         assert len(ignored) == 1
         assert TEST_NOTEBOOK_PATH.joinpath('basic.ipynb').samefile(ignored[0])
 
 
 def test_path_ignore_absolute():
-    with _temporary_treonignore('/basic.ipynb'):
-        ignored = build_ignore_list(TEST_NOTEBOOK_PATH)
+    with _temporary_treonignore('/basic.ipynb') as ignored:
         assert len(ignored) == 1
         assert TEST_NOTEBOOK_PATH.joinpath('basic.ipynb').samefile(ignored[0])
 
 
+def test_path_ignore_dir():
+    with _temporary_treonignore('/') as ignored:
+        assert len(ignored) == len(list(TEST_NOTEBOOK_PATH.iterdir()))
+
+
 def test_glob_ignore():
-    with _temporary_treonignore('*'):
-        ignored = build_ignore_list(TEST_NOTEBOOK_PATH)
+    with _temporary_treonignore('*') as ignored:
         assert len(ignored) == len(list(TEST_NOTEBOOK_PATH.iterdir()))
