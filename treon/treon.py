@@ -143,11 +143,12 @@ def build_ignore_list(search_directory):
         with ignorefile.open() as rules:
             for rule in rules:
                 rule = rule.strip().lstrip(os.sep)
+                rule = ignorefile.parent.joinpath(rule).as_posix()
                 # And find any notebooks that match those rules.
-                if os.path.isdir(ignorefile.parent.joinpath(rule)):
+                if os.path.isdir(rule):
                     rule = os.path.join(rule, '**')
                 LOG.debug("Adding ignore rule %s", rule)
-                for match in glob.iglob(ignorefile.parent.joinpath(rule).as_posix()):
+                for match in glob.iglob(rule):
                     if match.endswith('.ipynb'):
                         LOG.debug("Ignore file %s matches %r",
                                   ignorefile.as_posix(), match)
