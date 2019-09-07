@@ -32,7 +32,6 @@ from .task import Task
 DEFAULT_THREAD_COUNT = 10
 
 LOG = logging.getLogger('treon')
-LOG.setLevel(logging.DEBUG)
 
 
 def main():
