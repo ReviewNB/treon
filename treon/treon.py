@@ -19,7 +19,6 @@ __version__ = "0.1.2"
 
 
 from docopt import docopt, DocoptExit
-import glob
 import logging
 from multiprocessing.dummy import Pool as ThreadPool
 import pathlib
@@ -136,14 +135,18 @@ def build_ignore_list(search_directory):
 
     :param pathlib.Path search_directory: directory to search
     """
-    globs = []
     # For each .treonignore file in search_directory or its children...
     for ignorefile in search_directory.glob('**/.treonignore'):
         LOG.debug("Found ignore file %s", ignorefile.as_posix())
         # Iterate over all of the rules in the .treonignore file...
         with ignorefile.open() as rules:
             for rule in rules:
-                rule = rule.strip().lstrip('/')
+                rule = rule.strip().lstrip(os.sep)
                 # And find any notebooks that match those rules.
-                globs.extend(ignorefile.parent.glob(rule))
-    return globs
+                if os.path.isdir(ignorefile.parent.joinpath(rule)):
+                    rule = os.path.join(rule, '**')
+                LOG.debug("Adding ignore rule %s", rule)
+                for match in ignorefile.parent.glob(rule):
+                    LOG.debug("Ignore file %s matches %r",
+                              ignorefile.as_posix(), match.as_posix())
+                    yield match
