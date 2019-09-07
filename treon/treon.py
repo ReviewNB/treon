@@ -18,19 +18,21 @@ Options:
 __version__ = "0.1.2"
 
 
-from docopt import docopt, DocoptExit
+import glob
 import logging
-from multiprocessing.dummy import Pool as ThreadPool
 import pathlib
 import os
 import sys
 import textwrap
+from multiprocessing.dummy import Pool as ThreadPool
+from docopt import docopt, DocoptExit
 
 from .task import Task
 
 DEFAULT_THREAD_COUNT = 10
 
 LOG = logging.getLogger('treon')
+LOG.setLevel(logging.DEBUG)
 
 
 def main():
@@ -146,7 +148,8 @@ def build_ignore_list(search_directory):
                 if os.path.isdir(ignorefile.parent.joinpath(rule)):
                     rule = os.path.join(rule, '**')
                 LOG.debug("Adding ignore rule %s", rule)
-                for match in ignorefile.parent.glob(rule):
-                    LOG.debug("Ignore file %s matches %r",
-                              ignorefile.as_posix(), match.as_posix())
-                    yield match
+                for match in glob.iglob(ignorefile.parent.joinpath(rule).as_posix()):
+                    if match.endswith('.ipynb'):
+                        LOG.debug("Ignore file %s matches %r",
+                                  ignorefile.as_posix(), match)
+                        yield match

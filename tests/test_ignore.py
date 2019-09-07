@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import contextlib
+import glob
 import pathlib
 
 from treon.treon import build_ignore_list
@@ -38,9 +39,9 @@ def test_path_ignore_absolute():
 
 def test_path_ignore_dir():
     with _temporary_treonignore('/') as ignored:
-        assert len(ignored) == len(list(TEST_NOTEBOOK_PATH.iterdir()))
+        assert len(ignored) == len(glob.glob(TEST_NOTEBOOK_PATH.joinpath('**.ipynb').as_posix()))
 
 
 def test_glob_ignore():
     with _temporary_treonignore('*') as ignored:
-        assert len(ignored) == len(list(TEST_NOTEBOOK_PATH.iterdir()))
+        assert len(ignored) == len(glob.glob(TEST_NOTEBOOK_PATH.joinpath('**.ipynb').as_posix()))
