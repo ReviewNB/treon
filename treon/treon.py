@@ -2,13 +2,14 @@
 """
 Usage:
   treon
-  treon [PATH] [--threads=<number>] [-v]
+  treon [PATH] [--threads=<number>] [-v] [--exclude=<string>]...
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
 
 Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
+  -e=<string> --exclude=<string>   Pattern for excluding files from notebook search (substring matching)
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
@@ -127,4 +128,6 @@ def get_notebooks_to_test(args):
     if not result:
         sys.exit('No notebooks to test in {path}'.format(path=path))
 
+    for exclude_str in args['--exclude']:
+        result = [file for file in result if exclude_str not in file]
     return result
