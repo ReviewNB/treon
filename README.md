@@ -63,17 +63,19 @@ TEST RESULT
 ```
 Usage:
   treon
-  treon [PATH] [--threads=<number>] [-v]
+  treon [PATH] [--threads=<number>] [-v] [--exclude=<string>]...
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
 
 Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
+  -e=<string> --exclude=<string>   Option for excluding files or entire directories from testing. All files whose
+                      absolute path starts with the specified string are excluded from testing. This option can be
+                      specified more than once to exclude multiple files or directories.
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
-
 ```
 
 ## unitttest example

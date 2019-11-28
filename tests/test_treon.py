@@ -1,7 +1,7 @@
 from treon import treon
 
 
-def test_filter_results():
+def test_filter_results_file():
     args = {
         "--exclude": ['resources/basic.ipynb',
                       'failed']
@@ -19,14 +19,22 @@ def test_filter_results():
                 'other/resources.ipynb']
     assert filtered == expected
 
-    args = {
-        "--exclude": ['resources']
-    }
+
+def test_filter_results_folder():
+    args = {"--exclude": ['resources']}
+    results = ['resources/basic.ipynb',
+               'resources/doctest_failed.ipynb',
+               'resources/runtime_error.ipynb',
+               'resources/unittest_failed.ipynb',
+               'other/resources.ipynb']
 
     filtered = treon.filter_results(results=results, args=args)
     expected = ['other/resources.ipynb']
     assert filtered == expected
 
+
+def test_filter_results_empty():
+    args = {"--exclude": ['resources']}
     results = ['resources/basic.ipynb']
     filtered = treon.filter_results(results=results, args=args)
     expected = []
