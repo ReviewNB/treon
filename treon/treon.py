@@ -9,7 +9,7 @@ Arguments:
 
 Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
-  -e=<string> --exclude=<string>   Pattern for excluding files from notebook search (substring matching)
+  -e=<string> --exclude=<string>   Option for excluding files that start with this string. Can be provided more than once.
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
@@ -107,6 +107,12 @@ def print_test_collection(notebooks):
     LOG.debug(message)
 
 
+def filter_results(results, args):
+    for exclude_str in args['--exclude']:
+        results = [file for file in results if not file.startswith(exclude_str)]
+    return results
+
+
 def get_notebooks_to_test(args):
     path = args['PATH'] or os.getcwd()
     result = []
@@ -128,6 +134,4 @@ def get_notebooks_to_test(args):
     if not result:
         sys.exit('No notebooks to test in {path}'.format(path=path))
 
-    for exclude_str in args['--exclude']:
-        result = [file for file in result if exclude_str not in file]
-    return result
+    return filter_results(result, args)
