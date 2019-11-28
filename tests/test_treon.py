@@ -1,5 +1,5 @@
 from treon import treon
-
+import os
 
 def test_filter_results_file():
     args = {
@@ -36,6 +36,14 @@ def test_filter_results_folder():
 def test_filter_results_empty():
     args = {"--exclude": ['resources']}
     results = ['resources/basic.ipynb']
+    filtered = treon.filter_results(results=results, args=args)
+    expected = []
+    assert filtered == expected
+
+
+def test_filter_results_homedir():
+    args = {"--exclude": ['~/resources']}
+    results = [os.path.join(os.path.expanduser("~"), "resources/basic.ipynb")]
     filtered = treon.filter_results(results=results, args=args)
     expected = []
     assert filtered == expected

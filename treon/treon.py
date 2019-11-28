@@ -111,7 +111,7 @@ def print_test_collection(notebooks):
 
 def filter_results(results, args):
     for exclude_str in args['--exclude']:
-        exclude_abs = os.path.abspath(exclude_str)
+        exclude_abs = os.path.abspath(os.path.expanduser(exclude_str))
         results = [file for file in results if not os.path.abspath(file).startswith(exclude_abs)]
     return results
 
