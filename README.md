@@ -63,18 +63,17 @@ TEST RESULT
 ```
 Usage:
   treon
-  treon [PATH] [--threads=<number>] [-v] [--exclude=<path>]...
+  treon [PATH] [--threads=<number>] [-v] [--exclude=<string>]...
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
 
 Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
-  -e=<path> --exclude=<path>   Option for excluding files or entire directories from testing. All files whose
+  -e=<string> --exclude=<string>  Option for excluding files or entire directories from testing. All files whose
                       absolute path starts with the specified string are excluded from testing. This option can be
-                      specified more than once to exclude multiple files or directories. If the exclude path is 
-                      a valid directory name, only this directory is excluded. Example: --exclude "./notebook" will not 
-                      exclude the folder "./notebook2" if "./notebook" is an existing directory.
+                      specified more than once to exclude multiple files or directories. If the exclude path is
+                      a valid directory name, only this directory is excluded.
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
@@ -98,7 +97,7 @@ You just need to add tests as shown below & treon would execute them and report 
 For development, you may use below to create a Python interpreter that resides in `venv` in the current working directory, and to install all of treon's dependencies:
 
 ```
-$ virtualenv venv 
+$ virtualenv venv
 $ source venv/bin/activate
 $ pip install -e .
 $ pip install -r requirements-dev.txt
