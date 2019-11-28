@@ -72,7 +72,9 @@ Options:
   --threads=<number>  Number of parallel threads. Each thread processes one notebook file at a time. [default: 10]
   -e=<path> --exclude=<path>   Option for excluding files or entire directories from testing. All files whose
                       absolute path starts with the specified string are excluded from testing. This option can be
-                      specified more than once to exclude multiple files or directories.
+                      specified more than once to exclude multiple files or directories. If the exclude path is 
+                      a valid directory name, only this directory is excluded. Example: --exclude "./notebook" will not 
+                      exclude the folder "./notebook2" if "./notebook" is an existing directory.
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.

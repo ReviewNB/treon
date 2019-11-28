@@ -1,4 +1,5 @@
 import os
+from unittest import mock
 from treon import treon
 
 def test_filter_results_file():
@@ -44,6 +45,26 @@ def test_filter_results_empty():
 def test_filter_results_homedir():
     args = {"--exclude": ['~/resources']}
     results = [os.path.join(os.path.expanduser("~"), "resources/basic.ipynb")]
+    filtered = treon.filter_results(results=results, args=args)
+    expected = []
+    assert filtered == expected
+
+
+@mock.patch('os.path.isdir')
+def test_filter_results_exclude_is_dir(mock_isdir):
+    mock_isdir.return_value = True
+    args = {"--exclude": ["./notebook"]}
+    results = ["./notebook/1.pynb", "./notebook2/1.pynb"]
+    filtered = treon.filter_results(results=results, args=args)
+    expected = ["./notebook2/1.pynb"]
+    assert filtered == expected
+
+
+@mock.patch('os.path.isdir')
+def test_filter_results_exclude_is_not_dir(mock_isdir):
+    mock_isdir.return_value = False
+    args = {"--exclude": ["./notebook"]}
+    results = ["./notebook1/1.pynb", "./notebook2/1.pynb"]
     filtered = treon.filter_results(results=results, args=args)
     expected = []
     assert filtered == expected
