@@ -1,5 +1,5 @@
-from treon import treon
 import os
+from treon import treon
 
 def test_filter_results_file():
     args = {
