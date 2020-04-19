@@ -13,7 +13,6 @@ Easy to use test framework for Jupyter Notebooks.
 * Multithreaded execution for quickly testing a set of notebooks
 * Executes every Notebook in a fresh kernel to avoid hidden state problems
 * Primarily a command line tool that can be used easily in any Continuous Integration (CI) system
-* Soon to be part of [ReviewNB](https://www.reviewnb.com/)'s CI system that automatically runs treon everytime you push notebook changes to GitHub
 
 
 ## Installation
