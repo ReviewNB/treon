@@ -89,7 +89,7 @@ You just need to add tests as shown below & treon would execute them and report 
 ![](images/doctest.png)
 
 ## Note about dependencies
-* You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependcies required for Notebooks under test
+* You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependencies required for Notebooks under test
 * treon only works with python3+ environments and uses python3 kernel for executing notebooks
 
 ## Development
