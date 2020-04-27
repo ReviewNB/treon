@@ -78,7 +78,7 @@ Options:
   --version           Show version.
 ```
 
-## unitttest example
+## unittest example
 You just need to add tests as shown below & treon would execute them and report the result on the console. See [this](https://docs.python.org/2/library/unittest.html) for more details on how to write unittest.
 
 ![](images/unittest.png)
