@@ -78,7 +78,7 @@ Options:
   --version           Show version.
 ```
 
-## unitttest example
+## unittest example
 You just need to add tests as shown below & treon would execute them and report the result on the console. See [this](https://docs.python.org/2/library/unittest.html) for more details on how to write unittest.
 
 ![](images/unittest.png)
@@ -89,7 +89,7 @@ You just need to add tests as shown below & treon would execute them and report 
 ![](images/doctest.png)
 
 ## Note about dependencies
-* You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependcies required for Notebooks under test
+* You need to run treon from environment (virtualenv/pipenv etc.) that has all the dependencies required for Notebooks under test
 * treon only works with python3+ environments and uses python3 kernel for executing notebooks
 
 ## Development
@@ -121,7 +121,7 @@ $ make test # run all tests
 ```
 
 ## Motivation
-Our aim at [ReviewNB](https://www.reviewnb.com/) is to make notebooks a first class entity in the production workflow. We've built a code review system for Notebooks. The next step is to [build a CI pipeline](https://github.com/ReviewNB/support/issues/19) & treon is the core tool in that effort. It is licensed librerally (MIT) & I foresee it being used as an independent tool as well. You can use it locally and/or integrate with CI system of your choice.
+Our aim at [ReviewNB](https://www.reviewnb.com/) is to make notebooks a first class entity in the production workflow. We've built a code review system for Notebooks. The next step is to [build a CI pipeline](https://github.com/ReviewNB/support/issues/19) & treon is the core tool in that effort. It is licensed liberally (MIT) & I foresee it being used as an independent tool as well. You can use it locally and/or integrate with CI system of your choice.
 
 For motivation, checkout [Netflix's blog](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6) to see how notebooks are graduating from scratchpad to a part of production workflow.
 
