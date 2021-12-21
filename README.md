@@ -62,7 +62,7 @@ TEST RESULT
 ```
 Usage:
   treon
-  treon [PATH] [--threads=<number>] [-v] [--exclude=<string>]...
+  treon [PATH] [--threads=<number>] [--html] [-v] [--exclude=<string>]...
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
@@ -73,6 +73,7 @@ Options:
                       absolute path starts with the specified string are excluded from testing. This option can be
                       specified more than once to exclude multiple files or directories. If the exclude path is
                       a valid directory name, only this directory is excluded.
+  --html              Write executed notebook to html
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
