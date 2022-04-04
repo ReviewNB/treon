@@ -21,7 +21,7 @@ pip install treon
 ```
 
 ## Usage
-Treon will execute notebook from top to bottom and the test fails if any code cell returns an error. Additionally, one can write unittest & doctest to test for specific behaviour (examples shown below).
+Treon will execute notebook from top to bottom and the test fails if any code cell returns an error. Additionally, one can write unittest & doctest to test specific behaviour (examples shown below).
 
 ```
 $ treon
