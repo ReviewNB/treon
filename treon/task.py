@@ -14,15 +14,16 @@ def _is_verbose():
 
 
 class Task:
-    def __init__(self, file_path):
+    def __init__(self, file_path, html):
         self.file_path = file_path
         self.is_successful = False
+        self.html = html
 
     def run_tests(self):
         LOG.info("Triggered test for %s", self.file_path)
 
         try:
-            self.is_successful, console_output = execute_notebook(self.file_path)
+            self.is_successful, console_output = execute_notebook(self.file_path, self.html)
             result = self.result_string()
 
             if not self.is_successful or _is_verbose():

@@ -2,7 +2,7 @@
 """
 Usage:
   treon
-  treon [PATH] [--threads=<number>] [-v] [--exclude=<string>]...
+  treon [PATH] [--threads=<number>] [--html] [-v] [--exclude=<string>]...
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
@@ -13,6 +13,7 @@ Options:
                       absolute path starts with the specified string are excluded from testing. This option can be
                       specified more than once to exclude multiple files or directories. If the exclude path is
                       a valid directory name, only this directory is excluded.
+  --html              Write executed notebook to html
   -v --verbose        Print detailed output for debugging.
   -h --help           Show this screen.
   --version           Show version.
@@ -46,8 +47,9 @@ def main():
     setup_logging(arguments)
     LOG.info('Executing treon version %s', __version__)
     thread_count = arguments['--threads'] or DEFAULT_THREAD_COUNT
+    html_output = arguments['--html'] or False
     notebooks = get_notebooks_to_test(arguments)
-    tasks = [Task(notebook) for notebook in notebooks]
+    tasks = [Task(notebook, html_output) for notebook in notebooks]
     print_test_collection(notebooks)
     trigger_tasks(tasks, thread_count)
     has_failed = print_test_result(tasks)
@@ -64,7 +66,6 @@ def setup_logging(arguments):
 def loglevel(arguments):
     verbose = arguments['--verbose']
     return logging.DEBUG if verbose else logging.INFO
-
 
 def trigger_tasks(tasks, thread_count):
     pool = ThreadPool(int(thread_count))
