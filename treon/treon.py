@@ -124,6 +124,8 @@ def get_notebooks_to_test(args):
     result = []
 
     for path in paths:
+        current_result = []
+
         if os.path.isdir(path):
             LOG.info('Recursively scanning %s for notebooks...', path)
             path = os.path.join(path, '')  # adds trailing slash (/) if it's missing
