@@ -68,3 +68,19 @@ def test_filter_results_exclude_is_not_dir(mock_isdir):
     filtered = treon.filter_results(results=results, args=args)
     expected = []
     assert filtered == expected
+
+
+def test_get_notebooks_to_test_with_multiple_paths():
+    args = {
+        "PATH": [
+            'tests/resources/basic.ipynb',
+            'tests/resources/unittest_failed.ipynb',
+        ],
+        "--exclude": [],
+    }
+    notebooks = treon.get_notebooks_to_test(args=args)
+    expected = [
+        'tests/resources/basic.ipynb',
+        'tests/resources/unittest_failed.ipynb',
+    ]
+    assert notebooks == expected
