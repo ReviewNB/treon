@@ -82,3 +82,57 @@ def test_get_notebooks_to_test_with_multiple_paths():
     notebooks = treon.get_notebooks_to_test(args=args)
     expected = notebook_files
     assert notebooks == expected
+
+
+def test_get_notebooks_to_test_with_multiple_dir_paths():
+    cwd = os.path.dirname(__file__)
+    notebook_folders = [
+        os.path.join(cwd, "resources"),
+        os.path.join(cwd, "resources-2")
+    ]
+    expected = [os.path.join(cwd, 'resources/unittest_failed.ipynb'),
+                os.path.join(cwd, 'resources/runtime_error.ipynb'),
+                os.path.join(cwd, 'resources/basic.ipynb'),
+                os.path.join(cwd, 'resources/doctest_failed.ipynb'),
+                os.path.join(cwd, 'resources-2/a1.ipynb'),
+                os.path.join(cwd, 'resources-2/b1.ipynb')]
+    args = {
+        "PATH": list(notebook_folders),
+        "--exclude": [],
+    }
+    notebooks = treon.get_notebooks_to_test(args=args)
+    assert notebooks == expected
+
+
+def test_get_notebooks_to_test_with_multiple_dir_paths_with_exclude_files():
+    cwd = os.path.dirname(__file__)
+    notebook_folders = [
+        os.path.join(cwd, "resources"),
+        os.path.join(cwd, "resources-2")
+    ]
+    expected = [os.path.join(cwd, 'resources/unittest_failed.ipynb'),
+                os.path.join(cwd, 'resources/runtime_error.ipynb'),
+                os.path.join(cwd, 'resources/basic.ipynb'),
+                os.path.join(cwd, 'resources-2/a1.ipynb')]
+    args = {
+        "PATH": list(notebook_folders),
+        "--exclude": [os.path.join(cwd, 'resources/doctest_failed.ipynb'),  os.path.join(cwd, 'resources-2/b1.ipynb')],
+    }
+    notebooks = treon.get_notebooks_to_test(args=args)
+    assert notebooks == expected
+
+
+def test_get_notebooks_to_test_with_multiple_dir_paths_with_exclude_folder():
+    cwd = os.path.dirname(__file__)
+    notebook_folders = [
+        os.path.join(cwd, "resources"),
+        os.path.join(cwd, "resources-2")
+    ]
+    expected = [os.path.join(cwd, 'resources-2/a1.ipynb'),
+                os.path.join(cwd, 'resources-2/b1.ipynb')]
+    args = {
+        "PATH": list(notebook_folders),
+        "--exclude": [os.path.join(cwd, 'resources')],
+    }
+    notebooks = treon.get_notebooks_to_test(args=args)
+    assert notebooks == expected
