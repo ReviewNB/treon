@@ -116,7 +116,8 @@ def test_get_notebooks_to_test_with_multiple_dir_paths_with_exclude_files():
                 os.path.join(cwd, 'resources-2/a1.ipynb')]
     args = {
         "PATH": list(notebook_folders),
-        "--exclude": [os.path.join(cwd, 'resources/doctest_failed.ipynb'),  os.path.join(cwd, 'resources-2/b1.ipynb')],
+        "--exclude": [os.path.join(cwd, 'resources/doctest_failed.ipynb'),
+                      os.path.join(cwd, 'resources-2/b1.ipynb')]
     }
     notebooks = treon.get_notebooks_to_test(args=args)
     assert notebooks == expected
