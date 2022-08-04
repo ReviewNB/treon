@@ -25,7 +25,7 @@ Treon will execute notebook from top to bottom and the test fails if any code ce
 
 ```
 $ treon
-Executing treon version 0.1.0
+Executing treon version 0.1.4
 Recursively scanning /workspace/treon/tmp/docs/site/ru/guide for Notebooks...
 
 -----------------------------------------------------------------------
@@ -111,7 +111,7 @@ Because the script installs the package as editable, you can make changes in the
 $ which treon # should point into your virtualenv
 /path/to/my/venv/bin/treon
 $ pip list --local | grep treon # should point to the source tree
-treon                0.1.3                /workspace/treon
+treon                0.1.4                /workspace/treon
 ```
 
 Please refer to the `Makefile` for supplementary development tasks.
