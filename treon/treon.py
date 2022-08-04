@@ -2,7 +2,7 @@
 """
 Usage:
   treon
-  treon [PATH] [--threads=<number>] [-v] [--exclude=<string>]...
+  treon [PATH]... [--threads=<number>] [-v] [--exclude=<string>]...
 
 Arguments:
   PATH                File or directory path to find notebooks to test. Searches recursively for directory paths. [default: current working directory]
@@ -120,24 +120,29 @@ def filter_results(results, args):
 
 
 def get_notebooks_to_test(args):
-    path = args['PATH'] or os.getcwd()
+    paths = args['PATH'] or [os.getcwd()]
     result = []
 
-    if os.path.isdir(path):
-        LOG.info('Recursively scanning %s for notebooks...', path)
-        path = os.path.join(path, '')  # adds trailing slash (/) if it's missing
-        glob_path = path + '**/*.ipynb'
-        result = glob.glob(glob_path, recursive=True)
-    elif os.path.isfile(path):
-        if path.lower().endswith('.ipynb'):
-            LOG.debug('Testing notebook %s', path)
-            result = [path]
-        else:
-            sys.exit('{path} is not a Notebook'.format(path=path))
-    else:
-        sys.exit('{path} is not a valid path'.format(path=path))
+    for path in paths:
+        current_result = []
 
-    if not result:
-        sys.exit('No notebooks to test in {path}'.format(path=path))
+        if os.path.isdir(path):
+            LOG.info('Recursively scanning %s for notebooks...', path)
+            path = os.path.join(path, '')  # adds trailing slash (/) if it's missing
+            glob_path = path + '**/*.ipynb'
+            current_result = glob.glob(glob_path, recursive=True)
+        elif os.path.isfile(path):
+            if path.lower().endswith('.ipynb'):
+                LOG.debug('Testing notebook %s', path)
+                current_result = [path]
+            else:
+                sys.exit('{path} is not a Notebook'.format(path=path))
+        else:
+            sys.exit('{path} is not a valid path'.format(path=path))
+
+        if not current_result:
+            sys.exit('No notebooks to test in {path}'.format(path=path))
+
+        result.extend(current_result)
 
     return filter_results(result, args)
